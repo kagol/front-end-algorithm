@@ -4,7 +4,7 @@
  */
 const sharedLetters = (wordArr) => {
   let targetLetters = ''
-  const baseWord = wordArr[0]
+  const baseWord = minWord(wordArr)
   let otherWords = wordArr.filter(item => item !== baseWord)
   baseWord.split('').forEach(baseLetter => {
     if (allExist(otherWords, baseLetter)) {
@@ -13,6 +13,19 @@ const sharedLetters = (wordArr) => {
     }
   })
   return targetLetters
+}
+
+const minWord = (wordArr) => {
+  let minCount = wordArr[0].length
+  let minIndex = 0
+  wordArr.forEach((word, index) => {
+    const wordLen = word.length
+    if (wordLen < minCount) {
+      minCount = wordLen
+      minIndex = index
+    }
+  })
+  return wordArr[minIndex]
 }
 
 const allExist = (arr, letter) => {
@@ -33,9 +46,7 @@ const exclude = (word, letter) => {
 }
 
 const allExclude = (arr, letter) => {
-  return arr.map(item => {
-    return exclude(item, letter)
-  })
+  return arr.map(item => exclude(item, letter))
 }
 
 const wordArr = ['smooth', 'common', 'mooring']
